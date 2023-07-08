@@ -19,12 +19,11 @@
             android:layout_height="match_parent"
             />
 
-        <!-- Button in the Center -->
-        <Button
-            android:id="@+id/test_button"
+        <!-- FrameLayout in the Center -->
+        <FrameLayout
+            android:id="@+id/frame_layout_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Test"
             android:layout_centerInParent="true" />
 
     </RelativeLayout>

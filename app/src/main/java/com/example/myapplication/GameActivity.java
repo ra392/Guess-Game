@@ -77,9 +77,9 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (answerString == "Root Letter") {
-                    answerTextView.setText("Awesome your answer is right");
+                    answerTextView.setText("Correct!");
                 } else {
-                    answerTextView.setText("Incorrect! the answer is " + answerString);
+                    answerTextView.setText("Wrong! Correct answer is " + answerString);
                 }
                 // Wait for 5 seconds and create a new question
                 new Handler().postDelayed(new Runnable() {
