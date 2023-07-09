@@ -8,6 +8,11 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_result_game"
+        android:title="Reulst Last Game"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 
 
     <item

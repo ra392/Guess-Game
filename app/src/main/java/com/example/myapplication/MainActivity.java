@@ -23,10 +23,15 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private FrameLayout frameLayoutCenter;
 
+
+    private DbHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dbHelper = new DbHelper(this);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -55,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
                         websiteIntent.setData(Uri.parse(url));
                         startActivity(websiteIntent);
                         break;
+
+                    case R.id.action_result_game:
+                        // Open a website in a browser
+                        showResultFragment();
+                        break;
+
                     // Add more cases for other menu items as needed
 
                     default:
@@ -79,8 +90,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showGameFragment() {
+        dbHelper.deleteAllScores();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_content, new GameFrag())
+                .commit();
+        frameLayoutCenter.setVisibility(View.VISIBLE);
+    }
+    public void showResultFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_content, new ResultFrag())
                 .commit();
         frameLayoutCenter.setVisibility(View.VISIBLE);
     }

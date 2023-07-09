@@ -1,5 +1,4 @@
 package com.example.myapplication;
-
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +14,8 @@ public class GameFrag extends Fragment {
     private char[] grassLetters = {'g', 'j', 'p', 'q', 'y'};
     private char[] rootLetters = {'a', 'c', 'e', 'i', 'm', 'n', 'o', 'r', 's', 'u', 'v', 'w', 'x', 'z'};
     private String answerString = "";
+    private int questionCounter = 0;
+    private DbHelper dbHelper;
 
     public GameFrag() {
         // Required empty public constructor
@@ -35,20 +36,7 @@ public class GameFrag extends Fragment {
         skyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerString.equals("Sky Letter")) {
-                    answerTextView.setText("Awesome, your answer is right");
-                } else {
-                    answerTextView.setText("Incorrect! The answer is " + answerString);
-                }
-
-                // Wait for 5 seconds and create a new question
-                new android.os.Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        letterTextView.setText(getRandomLetter());
-                        answerTextView.setText("");
-                    }
-                }, 5000); // 5000 milliseconds = 5 seconds
+                checkAnswer("Sky Letter");
             }
         });
 
@@ -56,19 +44,7 @@ public class GameFrag extends Fragment {
         grassButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerString.equals("Grass Letter")) {
-                    answerTextView.setText("Awesome, your answer is right");
-                } else {
-                    answerTextView.setText("Incorrect! The answer is " + answerString);
-                }
-                // Wait for 5 seconds and create a new question
-                new android.os.Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        letterTextView.setText(getRandomLetter());
-                        answerTextView.setText("");
-                    }
-                }, 5000); // 5000 milliseconds = 5 seconds
+                checkAnswer("Grass Letter");
             }
         });
 
@@ -76,23 +52,41 @@ public class GameFrag extends Fragment {
         rootButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (answerString.equals("Root Letter")) {
-                    answerTextView.setText("Correct!");
-                } else {
-                    answerTextView.setText("Wrong! The correct answer is " + answerString);
-                }
-                // Wait for 5 seconds and create a new question
-                new android.os.Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        letterTextView.setText(getRandomLetter());
-                        answerTextView.setText("");
-                    }
-                }, 5000); // 5000 milliseconds = 5 seconds
+                checkAnswer("Root Letter");
             }
         });
 
+        dbHelper = new DbHelper(getContext());
+
         return view;
+    }
+
+    private void checkAnswer(String selectedAnswer) {
+        if (answerString.equals(selectedAnswer)) {
+            answerTextView.setText("Awesome, your answer is right");
+            dbHelper.addScore(new Score(questionCounter + 1, 1)); // Update the database with the score
+        } else {
+            answerTextView.setText("Incorrect! The answer is " + answerString);
+            dbHelper.addScore(new Score(questionCounter + 1, 0)); // Update the database with the score
+        }
+
+        questionCounter++;
+
+        if (questionCounter == 5) {
+            dbHelper.close(); // Close the database connection
+            // Move to the ResultFragment
+            MainActivity activity = (MainActivity) requireActivity();
+            activity.showResultFragment();
+        } else {
+            // Wait for 1 seconds and create a new question
+            new android.os.Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    letterTextView.setText(getRandomLetter());
+                    answerTextView.setText("");
+                }
+            }, 1000); // 1000 milliseconds = 1 seconds
+        }
     }
 
     private String getRandomLetter() {
