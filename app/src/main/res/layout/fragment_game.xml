@@ -3,12 +3,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".GameFrag">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <!-- Contents of the activity.xml layout -->
+        <TextView
+            android:id="@+id/letter_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Hello World!"
+            android:textSize="72sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/sky_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:text="Sky Letter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/letter_text_view" />
+
+        <Button
+            android:id="@+id/root_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Root Letter"
+            app:layout_constraintEnd_toEndOf="@+id/sky_button"
+            app:layout_constraintStart_toStartOf="@+id/sky_button"
+            app:layout_constraintTop_toBottomOf="@+id/sky_button" />
+
+        <Button
+            android:id="@+id/grass_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Grass Letter"
+            app:layout_constraintEnd_toEndOf="@+id/root_button"
+            app:layout_constraintStart_toStartOf="@+id/root_button"
+            app:layout_constraintTop_toBottomOf="@+id/root_button" />
+
+        <TextView
+            android:id="@+id/answer_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Right or Wrong"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/grass_button"
+            app:layout_constraintStart_toStartOf="@+id/grass_button"
+            app:layout_constraintTop_toBottomOf="@+id/grass_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
